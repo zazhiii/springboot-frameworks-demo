@@ -1,8 +1,10 @@
 package com.zazhi.shiro_demo.service;
 
+import com.zazhi.shiro_demo.common.JwtUtil;
 import com.zazhi.shiro_demo.pojo.User;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -12,15 +14,9 @@ import java.util.Set;
  */
 @Service
 public class UserService {
-    public User getByUsername(String username) {
-        if(username.equals("zhangsan")){
-            return new User("zhangsan", "e10adc3949ba59abbe56e057f20f883e");
-        }
-        return null;
-    }
-
-    public User login(String username, String password) {
-        return new User("zhangsan", "123456");
+    public String login(String username, String password) {
+        // 判断逻辑省略
+        return JwtUtil.genToken(Map.of("username", username));
     }
 
     public Set<String> findPermissionsByUsername(String username) {
@@ -28,7 +24,11 @@ public class UserService {
     }
 
     public Set<String> findRolesByUsername(String username) {
-        return Set.of("admin");
+        // 模拟从数据库中查询用户角色
+        if(username.equals("admin")){
+            return Set.of("admin");
+        }
+        return Set.of("user");
     }
 
     public String getUsernameById(String userId) {

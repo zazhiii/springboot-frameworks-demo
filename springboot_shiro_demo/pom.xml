@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.zazhi</groupId>
-	<artifactId>shiro_demo</artifactId>
+	<artifactId>springboot_shiro_jwt</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>shiro_demo</name>
 	<description>Demo project for Spring Boot</description>
@@ -107,12 +107,12 @@
 			<artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
 			<version>4.4.0</version>
 		</dependency>
-		<!--jwt2-->
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-api</artifactId>
-			<version>0.11.5</version>
-		</dependency>
+<!--		&lt;!&ndash;jwt2&ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>io.jsonwebtoken</groupId>-->
+<!--			<artifactId>jjwt-api</artifactId>-->
+<!--			<version>0.11.5</version>-->
+<!--		</dependency>-->
 
 		<!--lombok依赖-->
 		<dependency>
