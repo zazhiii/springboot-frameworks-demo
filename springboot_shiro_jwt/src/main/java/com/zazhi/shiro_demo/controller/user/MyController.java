@@ -1,4 +1,4 @@
-package com.zazhi.shiro_demo.controller;
+package com.zazhi.shiro_demo.controller.user;
 
 import com.zazhi.shiro_demo.common.Result;
 import com.zazhi.shiro_demo.service.UserService;
@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @description:
  */
 @Slf4j
-@RestController
-@RequestMapping("MyController")
+@RestController()
+@RequestMapping("/api")
 @Tag(name = "MyController", description = "用户接口")
 public class MyController {
 
@@ -34,7 +34,7 @@ public class MyController {
 
     // 不需要认证就能访问
     @GetMapping("/public")
-    public Result<String> hello() {
+    public Result<String> pub() {
         return Result.success("公共页面");
     }
 

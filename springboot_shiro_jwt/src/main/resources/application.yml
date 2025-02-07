@@ -14,9 +14,6 @@ springdoc:
   api-docs:
     path: /v3/api-docs
   group-configs:
-    - group: 'admin'
-      paths-to-match: '/**'
-      packages-to-scan: com.zazhi.shiro_demo.controller.admin
     - group: 'default'
       paths-to-match: '/**'
       packages-to-scan: com.zazhi.shiro_demo.controller
