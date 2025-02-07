@@ -1,6 +1,7 @@
 package com.zazhi.shiro_demo.controller.admin;
 
 import com.zazhi.shiro_demo.pojo.User;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -23,9 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 // 会导致knife4j无法扫描到这个controller, 加到方法上就不会有这个问题
 
 public class MyController {
+
+    @Operation(summary = "hello admin")
     @GetMapping("/admin/hello")
     @RequiresAuthentication
-    @RequiresRoles("admin")
+//    @RequiresRoles("admin")
     public String hello(@Validated User user) {
         return "hello admin";
     }

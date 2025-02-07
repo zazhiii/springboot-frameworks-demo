@@ -7,6 +7,7 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,9 +30,6 @@ public class ShiroConfig {
         Map<String, Filter> filters = new HashMap<>();
         filters.put("jwt", jwtFilter);
         shiroFilterFactoryBean.setFilters(filters);
-
-        // 设置无权限时跳转url
-        shiroFilterFactoryBean.setUnauthorizedUrl("/unauthorized/无权限");
 
         // setFilterChainDefinitionMap 用来定义 URL 路径与过滤器的映射关系。所有请求都会通过 jwt 过滤器进行身份验证。
         shiroFilterFactoryBean.setFilterChainDefinitionMap(shiroFilterChainDefinition.getFilterChainMap());
@@ -60,5 +58,14 @@ public class ShiroConfig {
         defaultWebSecurityManager.setSubjectDAO(defaultSubjectDAO);
         return defaultWebSecurityManager;
     }
+
+    // 防止 Spring 将 JwtFilter 注册为全局过滤器
+    @Bean
+    public FilterRegistrationBean<Filter> registration(JwtFilter filter) {
+        FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<Filter>(filter);
+        registration.setEnabled(false);
+        return registration;
+    }
+
 }
 

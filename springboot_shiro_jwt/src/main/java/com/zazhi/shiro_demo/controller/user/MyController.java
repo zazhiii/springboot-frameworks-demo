@@ -35,6 +35,7 @@ public class MyController {
     // 不需要认证就能访问
     @GetMapping("/public")
     public Result<String> pub() {
+        log.info("调用 pub");
         return Result.success("公共页面");
     }
 

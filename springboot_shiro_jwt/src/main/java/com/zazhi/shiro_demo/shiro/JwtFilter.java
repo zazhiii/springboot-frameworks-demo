@@ -1,7 +1,5 @@
 package com.zazhi.shiro_demo.shiro;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zazhi.shiro_demo.common.Result;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,10 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @Component
