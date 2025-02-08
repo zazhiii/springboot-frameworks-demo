@@ -29,8 +29,4 @@ public class UserService {
         }
         return Set.of("user");
     }
-
-    public String getUsernameById(String userId) {
-        return "zhangsan";
-    }
 }
