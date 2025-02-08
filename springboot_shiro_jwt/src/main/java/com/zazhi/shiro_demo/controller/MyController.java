@@ -39,6 +39,13 @@ public class MyController {
         return Result.success("公共页面");
     }
 
+    // 需要「认证」才能访问
+    @RequiresAuthentication
+    @GetMapping("/profile")
+    public Result<String> profile() {
+        return Result.success("个人信息页面");
+    }
+
     // 需要「认证」和「特定角色」才能访问
     @RequiresAuthentication
     @RequiresRoles("admin")
@@ -48,14 +55,7 @@ public class MyController {
         return Result.success("控制面板页面");
     }
 
-    // 需要「认证」才能访问
-    @RequiresAuthentication
-    @GetMapping("/profile")
-    public Result<String> profile() {
-        return Result.success("个人信息页面");
-    }
-
-    // 需要「认证」并有「特定权限」才能访问
+    // 需要「认证」和「特定权限」才能访问
     @RequiresAuthentication
     @RequiresPermissions("view:dashboard")
     @GetMapping("/viewDashboard")

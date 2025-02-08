@@ -1,7 +1,6 @@
 package com.zazhi.shiro_demo.service;
 
 import com.zazhi.shiro_demo.common.JwtUtil;
-import com.zazhi.shiro_demo.pojo.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;

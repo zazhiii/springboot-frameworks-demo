@@ -60,6 +60,7 @@ public class ShiroConfig {
     }
 
     // 防止 Spring 将 JwtFilter 注册为全局过滤器
+    // 没有这个的话请求会被 JwtFilter 拦截两次
     @Bean
     public FilterRegistrationBean<Filter> registration(JwtFilter filter) {
         FilterRegistrationBean<Filter> registration = new FilterRegistrationBean<Filter>(filter);

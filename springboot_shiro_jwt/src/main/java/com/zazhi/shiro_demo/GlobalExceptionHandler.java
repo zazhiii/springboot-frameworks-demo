@@ -36,6 +36,11 @@ public class GlobalExceptionHandler{
         return Result.error("未授权");
     }
 
+    /**
+     * 处理其他异常
+     * @param e
+     * @return
+     */
     @ExceptionHandler(Exception.class)
     public Result handleException(Exception e){
         log.info("Exception: ", e);
