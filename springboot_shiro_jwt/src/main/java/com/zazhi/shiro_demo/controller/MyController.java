@@ -1,4 +1,4 @@
-package com.zazhi.shiro_demo.controller.user;
+package com.zazhi.shiro_demo.controller;
 
 import com.zazhi.shiro_demo.common.Result;
 import com.zazhi.shiro_demo.service.UserService;
