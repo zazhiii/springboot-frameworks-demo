@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="springboot_shiro_jwt" />
+        <module name="shiro_demo" />
       </profile>
     </annotationProcessing>
   </component>

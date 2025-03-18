@@ -5,6 +5,8 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/springboot_shiro_demo/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot_shiro/pom.xml" />
+        <option value="$PROJECT_DIR$/springboot_shiro_jwt/pom.xml" />
       </list>
     </option>
   </component>
