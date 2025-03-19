@@ -8,12 +8,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="springboot_shiro_jwt" />
-        <module name="shiro_demo" />
+        <module name="springboot_minio" />
+        <module name="springboot_shiro" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="springboot_minio" options="-parameters" />
       <module name="springboot_shiro_jwt" options="-parameters" />
     </option>
   </component>

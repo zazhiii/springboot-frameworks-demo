@@ -1,7 +1,7 @@
-package com.zazhi.shiro_demo.shiro;
+package com.zazhi.minio_demo.shiro_demo.shiro;
 
-import com.zazhi.shiro_demo.common.JwtUtil;
-import com.zazhi.shiro_demo.service.UserService;
+import com.zazhi.minio_demo.shiro_demo.common.JwtUtil;
+import com.zazhi.minio_demo.shiro_demo.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;

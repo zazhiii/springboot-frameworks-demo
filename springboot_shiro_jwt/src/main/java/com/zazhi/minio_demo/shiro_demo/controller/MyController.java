@@ -1,7 +1,7 @@
-package com.zazhi.shiro_demo.controller;
+package com.zazhi.minio_demo.shiro_demo.controller;
 
-import com.zazhi.shiro_demo.common.Result;
-import com.zazhi.shiro_demo.service.UserService;
+import com.zazhi.minio_demo.shiro_demo.common.Result;
+import com.zazhi.minio_demo.shiro_demo.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;

@@ -1,4 +1,4 @@
-package com.zazhi.shiro_demo.shiro;
+package com.zazhi.minio_demo.shiro_demo.shiro;
 
 import org.apache.shiro.authc.AuthenticationToken;
 

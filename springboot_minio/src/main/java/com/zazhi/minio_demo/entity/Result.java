@@ -1,4 +1,4 @@
-package com.zazhi.shiro_demo.common;
+package com.zazhi.minio_demo.entity;
 
 import lombok.Data;
 
