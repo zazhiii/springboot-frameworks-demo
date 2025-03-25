@@ -3,7 +3,6 @@ package com.zazhi.minio_demo.controller;
 import com.zazhi.minio_demo.config.MinioConfig;
 import com.zazhi.minio_demo.entity.Result;
 import com.zazhi.minio_demo.util.MinioUtil;
-import io.minio.messages.Bucket;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -43,11 +41,11 @@ public class FileController {
         return Result.success(minioUtil.removeBucket(bucketName));
     }
 
-    @Operation(summary = "获取全部bucket")
-    @GetMapping("/getAllBuckets")
-    public Result<List<Bucket>> getAllBuckets() {
-        return Result.success(minioUtil.getAllBuckets());
-    }
+//    @Operation(summary = "获取全部bucket")
+//    @GetMapping("/getAllBuckets")
+//    public Result<List<Bucket>> getAllBuckets() {
+//        return Result.success(minioUtil.getAllBuckets());
+//    }
 
     @Operation(summary = "文件上传返回url")
     @PostMapping("/upload")
