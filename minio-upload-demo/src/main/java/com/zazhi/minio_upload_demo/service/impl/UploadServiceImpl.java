@@ -157,4 +157,55 @@ public class UploadServiceImpl implements UploadService {
                 .build();
         return taskInfoVO;
     }
+
+    /**
+     * 合并分片
+     * @param identifier
+     */
+    @Override
+    public void merge(String identifier) {
+        UploadTask uploadTask = uploadTaskMapper.getByIdentifier(identifier);
+        if(uploadTask == null){
+            throw new RuntimeException("上传任务不存在");
+        }
+
+        List<Part> partList = null;
+        try {
+            partList = pearlMinioClient.listMultipart(
+                    uploadTask.getBucketName(),
+                    null,
+                    uploadTask.getObjectName(),
+                    10000,
+                    0,
+                    uploadTask.getUploadId(),
+                    null,
+                    null
+            ).get().result().partList();
+        } catch (Exception e) {
+            throw new RuntimeException("获取上传进度失败");
+        }
+
+        if(partList.size() != uploadTask.getChunkNum()){
+            throw new RuntimeException("分片缺失，请重新上传");
+        }
+
+        // 合并分片
+        Part[] parts = new Part[1000];
+        for(int partNumber = 1; partNumber <= partList.size(); partNumber++){
+            parts[partNumber - 1] = new Part(partNumber, partList.get(partNumber - 1).etag());
+        }
+        try {
+            pearlMinioClient.completeMultipartUploadAsync(
+                    uploadTask.getBucketName(),
+                    null,
+                    uploadTask.getObjectName(),
+                    uploadTask.getUploadId(),
+                    parts,
+                    null,
+                    null
+            ).get();
+        } catch (Exception e) {
+            throw new RuntimeException("合并分片失败");
+        }
+    }
 }

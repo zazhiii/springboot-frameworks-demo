@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: minio-upload-demo
+
+minio:
+  endpoint: http://localhost:9000
+  bucketName: geoflow
+  accessKey: YtDznxVyGgplz9qXl5bw
+  accessSecret: K4N9YbIUHifTm5ABkMWHidp8QN8YmYn7RmlsYSBz
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.zazhi.minio_upload_demo.controller
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn

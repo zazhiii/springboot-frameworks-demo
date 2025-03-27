@@ -27,4 +27,10 @@ public interface UploadService {
      * @return
      */
     TaskInfoVO getTaskInfo(String identifier);
+
+    /**
+     * 合并分片
+     * @param identifier
+     */
+    void merge(String identifier);
 }
