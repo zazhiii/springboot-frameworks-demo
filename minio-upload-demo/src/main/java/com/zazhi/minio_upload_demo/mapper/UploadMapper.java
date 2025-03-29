@@ -12,7 +12,8 @@ public interface UploadMapper {
      * 插入上传任务
      * @param uploadTask
      */
-    @Insert("insert into upload_task(upload_id, file_identifier, file_name, bucket_name, object_name, total_size, chunk_size, chunk_num) values(#{uploadId}, #{fileIdentifier}, #{fileName}, #{bucketName}, #{objectName}, #{totalSize}, #{chunkSize}, #{chunkNum})")
+    @Insert("insert into upload_task(upload_id, file_identifier, file_name, bucket_name, object_name, total_size, chunk_size, chunk_num) " +
+            "values(#{uploadId}, #{fileIdentifier}, #{fileName}, #{bucketName}, #{objectName}, #{totalSize}, #{chunkSize}, #{chunkNum})")
     void insert(UploadTask uploadTask);
 
     /**
