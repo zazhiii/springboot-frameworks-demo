@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * @description: TODO
  */
 @RestController
-@RequestMapping("/upload")
+@RequestMapping("api/upload")
 public class UploadController {
 
     @Autowired

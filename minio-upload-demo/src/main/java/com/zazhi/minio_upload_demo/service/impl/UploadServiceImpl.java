@@ -2,28 +2,22 @@ package com.zazhi.minio_upload_demo.service.impl;
 
 import com.zazhi.minio_upload_demo.mapper.UploadMapper;
 import com.zazhi.minio_upload_demo.minio.MinioConfigProperties;
+import com.zazhi.minio_upload_demo.minio.MinioUtil;
 import com.zazhi.minio_upload_demo.minio.PearlMinioClient;
 import com.zazhi.minio_upload_demo.pojo.TaskInfoVO;
 import com.zazhi.minio_upload_demo.pojo.UploadTask;
 import com.zazhi.minio_upload_demo.service.UploadService;
 import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.MinioClient;
-import io.minio.errors.*;
 import io.minio.http.Method;
 import io.minio.messages.Part;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,7 +38,10 @@ public class UploadServiceImpl implements UploadService {
     private MinioConfigProperties minioConfigProp;
 
     @Autowired
-    private UploadMapper uploadTaskMapper;
+    private UploadMapper uploadMapper;
+
+    @Autowired
+    private MinioUtil minioUtil;
 
     /**
      * 初始化上传任务
@@ -80,13 +77,15 @@ public class UploadServiceImpl implements UploadService {
                 .totalSize(totalSize)
                 .chunkSize(chunkSize)
                 .chunkNum((int)((totalSize + chunkSize - 1) / chunkSize)) // 计算分片数量 上取整
+                .bucketName(minioConfigProp.getBucketName())
                 .build();
-        uploadTaskMapper.insert(uploadTask);
+        uploadMapper.insert(uploadTask);
 
         // 返回 taskInfoVO
         TaskInfoVO taskInfoVO = new TaskInfoVO();
         BeanUtils.copyProperties(uploadTask, taskInfoVO);
         taskInfoVO.setFinished(false);
+        taskInfoVO.setParts(new ArrayList<>());
         taskInfoVO.setFileUrl(minioConfigProp.getEndpoint() + "/" + minioConfigProp.getBucketName() + "/" + objectName);
         return taskInfoVO;
     }
@@ -99,7 +98,7 @@ public class UploadServiceImpl implements UploadService {
      */
     @Override
     public String getPresignedObjectUrl(String identifier, Integer partNumber){
-        UploadTask uploadTask = uploadTaskMapper.getByIdentifier(identifier);
+        UploadTask uploadTask = uploadMapper.getByIdentifier(identifier);
         if(uploadTask == null){
             throw new RuntimeException("上传任务不存在");
         }
@@ -130,11 +129,18 @@ public class UploadServiceImpl implements UploadService {
      */
     @Override
     public TaskInfoVO getTaskInfo(String identifier) {
-        UploadTask uploadTask = uploadTaskMapper.getByIdentifier(identifier);
+        UploadTask uploadTask = uploadMapper.getByIdentifier(identifier);
         if(uploadTask == null){
-            throw new RuntimeException("上传任务不存在");
+            return null; // 任务不存在, 返回null, 前端得知任务不存在, 调用初始化接口
         }
-
+        TaskInfoVO taskInfoVO = new TaskInfoVO();
+        BeanUtils.copyProperties(uploadTask, taskInfoVO);
+        // 已经完成上传;「秒传」的实现就在这一步文件已经存在则直接返回
+        if(minioUtil.checkFileIsExist(minioConfigProp.getBucketName(), uploadTask.getObjectName())){
+            taskInfoVO.setFinished(true);
+            return taskInfoVO;
+        }
+        // 没有完成上传, 则携带上传完成的分片集合返回
         List<Part> parts = null;
         try {
             parts = pearlMinioClient.listMultipart(
@@ -150,11 +156,8 @@ public class UploadServiceImpl implements UploadService {
         } catch (Exception e) {
             throw new RuntimeException("获取上传进度失败");
         }
-
-        // TODO: 补充字段
-        TaskInfoVO taskInfoVO = TaskInfoVO.builder()
-                .parts(parts)
-                .build();
+        taskInfoVO.setFinished(false);
+        taskInfoVO.setParts(parts);
         return taskInfoVO;
     }
 
@@ -164,7 +167,7 @@ public class UploadServiceImpl implements UploadService {
      */
     @Override
     public void merge(String identifier) {
-        UploadTask uploadTask = uploadTaskMapper.getByIdentifier(identifier);
+        UploadTask uploadTask = uploadMapper.getByIdentifier(identifier);
         if(uploadTask == null){
             throw new RuntimeException("上传任务不存在");
         }
