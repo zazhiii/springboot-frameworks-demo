@@ -135,7 +135,7 @@ public class UploadServiceImpl implements UploadService {
         }
         TaskInfoVO taskInfoVO = new TaskInfoVO();
         BeanUtils.copyProperties(uploadTask, taskInfoVO);
-        // 已经完成上传;「秒传」的实现就在这一步文件已经存在则直接返回
+        // 已经完成上传
         if(minioUtil.checkFileIsExist(minioConfigProp.getBucketName(), uploadTask.getObjectName())){
             taskInfoVO.setFinished(true);
             return taskInfoVO;
